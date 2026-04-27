@@ -280,6 +280,10 @@ func heartbeatLoop() {
 
 // cleanupExpiredInstances 清理超时实例
 func cleanupExpiredInstances(serviceName string) {
+	if verdantRedis.RedisClient == nil {
+		return
+	}
+
 	ctx := context.Background()
 	serverKey := fmt.Sprintf("service:%s", serviceName)
 
