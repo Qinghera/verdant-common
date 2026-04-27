@@ -6,7 +6,7 @@ import (
 
 	"google.golang.org/grpc"
 	"github.com/rs/zerolog/log"
-	"github.com/verdant-tech/verdant-common/common/config"
+	"github.com/Qinghera/verdant-common/common/config"
 )
 
 // RpcServer 启动gRPC服务器

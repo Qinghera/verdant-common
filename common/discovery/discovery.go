@@ -14,8 +14,8 @@ import (
 
 	"github.com/redis/go-redis/v9"
 	"github.com/rs/zerolog/log"
-	"github.com/verdant-tech/verdant-common/common/config"
-	"github.com/verdant-tech/verdant-common/common/data/redis"
+	"github.com/Qinghera/verdant-common/common/config"
+	"github.com/Qinghera/verdant-common/common/data/redis"
 )
 
 // ServerNode 服务节点信息

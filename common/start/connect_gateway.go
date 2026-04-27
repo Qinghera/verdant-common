@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/rs/zerolog/log"
-	"github.com/verdant-tech/verdant-common/common/config"
+	"github.com/Qinghera/verdant-common/common/config"
 )
 
 // connectGateway 连接到网关并注册服务

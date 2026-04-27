@@ -9,7 +9,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"github.com/verdant-tech/verdant-common/common/config"
+	"github.com/Qinghera/verdant-common/common/config"
 )
 
 // DB 全局数据库实例

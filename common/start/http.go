@@ -11,10 +11,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
-	"github.com/verdant-tech/verdant-common/common/config"
-	"github.com/verdant-tech/verdant-common/common/discovery"
-	"github.com/verdant-tech/verdant-common/common/logger"
-	"github.com/verdant-tech/verdant-common/common/response"
+	"github.com/Qinghera/verdant-common/common/config"
+	"github.com/Qinghera/verdant-common/common/discovery"
+	"github.com/Qinghera/verdant-common/common/logger"
+	"github.com/Qinghera/verdant-common/common/response"
 )
 
 // HttpServer 启动HTTP服务器
