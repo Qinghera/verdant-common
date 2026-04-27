@@ -60,12 +60,25 @@ var (
 // GetRegistry 获取注册中心实例
 func GetRegistry() Registry {
 	registryOnce.Do(func() {
+		if verdantRedis.RedisClient == nil {
+			// Redis 未初始化，使用空注册中心
+			registryInstance = &noopRegistry{}
+			return
+		}
 		registryInstance = &redisRegistry{
 			client: verdantRedis.RedisClient,
 		}
 	})
 	return registryInstance
 }
+
+// noopRegistry 空注册中心实现（Redis未启用时使用）
+type noopRegistry struct{}
+
+func (n *noopRegistry) Register(node ServerNode[any]) error  { return nil }
+func (n *noopRegistry) Deregister(serviceName, instanceID string) error { return nil }
+func (n *noopRegistry) Discover(serviceName string) ([]ServerNode[any], error) { return nil, nil }
+func (n *noopRegistry) Heartbeat(serviceName, instanceID string) error { return nil }
 
 // Init 初始化服务发现
 // 自动注册到Redis，启动心跳协程
