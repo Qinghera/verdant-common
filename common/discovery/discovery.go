@@ -7,7 +7,6 @@ import (
 	"net"
 	"os"
 	"os/signal"
-	"strconv"
 	"sync"
 	"syscall"
 	"time"
@@ -15,7 +14,7 @@ import (
 	"github.com/redis/go-redis/v9"
 	"github.com/rs/zerolog/log"
 	"github.com/Qinghera/verdant-common/common/config"
-	"github.com/Qinghera/verdant-common/common/data/redis"
+	verdantRedis "github.com/Qinghera/verdant-common/common/data/redis"
 )
 
 // ServerNode 服务节点信息
@@ -62,7 +61,7 @@ var (
 func GetRegistry() Registry {
 	registryOnce.Do(func() {
 		registryInstance = &redisRegistry{
-			client: redis.RedisClient,
+			client: verdantRedis.RedisClient,
 		}
 	})
 	return registryInstance
@@ -124,7 +123,7 @@ func GetServiceList[T any](serviceName string) []ServerNode[T] {
 	ctx := context.Background()
 	serverKey := fmt.Sprintf("service:%s", serviceName)
 
-	result, err := redis.RedisClient.HGetAll(ctx, serverKey).Result()
+	result, err := verdantRedis.RedisClient.HGetAll(ctx, serverKey).Result()
 	if err != nil {
 		log.Error().Err(err).Str("service", serviceName).Msg("获取服务列表失败")
 		return nil
@@ -271,7 +270,7 @@ func cleanupExpiredInstances(serviceName string) {
 	ctx := context.Background()
 	serverKey := fmt.Sprintf("service:%s", serviceName)
 
-	result, err := redis.RedisClient.HGetAll(ctx, serverKey).Result()
+	result, err := verdantRedis.RedisClient.HGetAll(ctx, serverKey).Result()
 	if err != nil {
 		return
 	}
@@ -284,7 +283,7 @@ func cleanupExpiredInstances(serviceName string) {
 		}
 		// 超过10分钟无心跳，删除
 		if now-node.ActiveLastTime > 600 {
-			redis.RedisClient.HDel(ctx, serverKey, field)
+			verdantRedis.RedisClient.HDel(ctx, serverKey, field)
 			log.Info().Str("instance", node.ID).Msg("清理超时实例")
 		}
 	}
